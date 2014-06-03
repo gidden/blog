@@ -18,12 +18,12 @@ meta: some of the nuts and bolts of how I actually came to develop this blog.
 
 First of all, I needed somewhere to host this thing. As luck turned out, I
 recently went through the work of developing my `website
-<mattgidden.com>`_. Using Github's `pages <https://pages.github.com/>`_ feature
-was a natural choice. I'm still a bit of a website noob, so (at the time of
-writing), I'm just using the extended domain `mattgidden.com/blog
-<mattgidden.com/blog>`_. One day I'll get a better grasp on subdomains and look
-to make it rather ``blog.mattgidden.com`` or some such. I have the feeling that
-the ghpages-all-in-one-website approach may be limiting there.
+<http://mattgidden.com>`_. Using Github's `pages <https://pages.github.com/>`_
+feature was a natural choice. I'm still a bit of a website noob, so (at the time
+of writing), I'm just using the extended domain `mattgidden.com/blog
+<http://mattgidden.com/blog>`_. One day I'll get a better grasp on subdomains
+and look to make it rather ``blog.mattgidden.com`` or some such. I have the
+feeling that the ghpages-all-in-one-website approach may be limiting there.
 
 How do you say 'notebook' in French?
 ------------------------------------
@@ -39,10 +39,10 @@ My initial thought was "Why not Jekyll? You get automatic ghpages support!", but
 as my only (free) webhosting service, I need it to support *all* of my
 websites. Not only was I interested in having a blog, but I also wanted to host
 my `Sphinx-generated <http://sphinx-doc.org/>`_ `Cyclopts
-<github.com/gidden/cyclopts>`_ project `documentation
-<mattgidden.com/cyclopts>`_. This ran afoul of a major design decision in Jekyll
-and the way Sphinx generates websites: Jekyll doesn't publish directories that
-start with a `_`, and Sphinx generates websites with exactly those kinds of
+<http://github.com/gidden/cyclopts>`_ project `documentation
+<http://mattgidden.com/cyclopts>`_. This ran afoul of a major design decision in
+Jekyll and the way Sphinx generates websites: Jekyll doesn't publish directories
+that start with a `_`, and Sphinx generates websites with exactly those kinds of
 directories. The answer? `Bypass Jekyll
 <https://github.com/blog/572-bypassing-jekyll-on-github-pages>`_. The
 consequence? We bypassed Jekyll.
