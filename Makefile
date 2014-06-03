@@ -31,6 +31,7 @@ ifeq ($(DEBUG), 1)
 endif
 
 # doc publishing variables
+BUILDDIR        = $(OUTPUTDIR)
 DOCREPOURL      = git@github.com:gidden/gidden.github.io
 DOCREPODIR      = ~/personal/site
 DOCUPDATENAME   = blog
