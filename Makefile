@@ -30,14 +30,21 @@ ifeq ($(DEBUG), 1)
 	PELICANOPTS += -D
 endif
 
+# doc publishing variables
+DOCREPOURL      = git@github.com:gidden/gidden.github.io
+DOCREPODIR      = ~/personal/site
+DOCUPDATENAME   = blog
+DOCHTMLDIR      = $(DOCREPODIR)/blog
+TMPDOCDIR       = $(DOCREPODIR)/.$(DOCUPDATENAME)tmpdocs
+
 help:
 	@echo 'Makefile for a pelican Web site                                        '
 	@echo '                                                                       '
 	@echo 'Usage:                                                                 '
 	@echo '   make html                        (re)generate the web site          '
 	@echo '   make clean                       remove the generated files         '
+	@echo '   make publish                     publish blog to personal website   '
 	@echo '   make regenerate                  regenerate files upon modification '
-	@echo '   make publish                     generate using production settings '
 	@echo '   make serve [PORT=8000]           serve site at http://localhost:8000'
 	@echo '   make devserver [PORT=8000]       start/restart develop_server.sh    '
 	@echo '   make stopserver                  stop local server                  '
@@ -54,6 +61,28 @@ help:
 
 html:
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
+
+publish:
+	@echo
+	@echo "Updating $(DOCHTMLDIR) with current documentation."
+	test -d $(DOCREPODIR) || git clone $(DOCREPOURL) $(DOCREPONAME) && \
+	test ! -d $(TMPDOCDIR) || rm -r $(TMPDOCDIR) && \
+	mkdir -p $(TMPDOCDIR) && \
+	cp -r $(BUILDDIR)/* $(TMPDOCDIR) && \
+	cd $(DOCREPODIR) && git pull origin master && \
+	test ! -d $(DOCHTMLDIR) || rm -r $(DOCHTMLDIR) && \
+	mkdir -p $(DOCHTMLDIR) && mv $(TMPDOCDIR)/* $(DOCHTMLDIR) && \
+	rm -r $(TMPDOCDIR)/ && \
+	cd $(DOCREPODIR) && git add $(DOCHTMLDIR) && \
+	if [ -n "$$(git status $(DOCHTMLDIR) --porcelain)" ]; \
+	then git commit -m "updated $(DOCUPDATENAME) html" && git push origin master; \
+	fi
+	@echo
+	@echo "$(DOCHTMLDIR) updated and pushed to $(DOCREPOURL)."
+.PHONY: publish
+
+html-publish: html publish
+.PHONY: html-publish
 
 clean:
 	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)
@@ -80,8 +109,8 @@ stopserver:
 	kill -9 `cat srv.pid`
 	@echo 'Stopped Pelican and SimpleHTTPServer processes running in background.'
 
-publish:
-	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(PUBLISHCONF) $(PELICANOPTS)
+# old publish:
+#	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(PUBLISHCONF) $(PELICANOPTS)
 
 ssh_upload: publish
 	scp -P $(SSH_PORT) -r $(OUTPUTDIR)/* $(SSH_USER)@$(SSH_HOST):$(SSH_TARGET_DIR)
