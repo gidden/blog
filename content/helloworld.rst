@@ -60,10 +60,10 @@ Makefiles are amazing things
 ----------------------------
 
 I actually keep my `blog repository <github.com/gidden/blog>`_ separate from my
-`website repo <github.com/gidden/gidden.github.io>`_, and I only keep html in my
-website repository. My local copy of each is in ``~/personal/site`` and
-``~/personal/blog``, respectively. Accordingly, I had to update the blog repos
-Makefile with the following lines: ::
+`website repo <http://github.com/gidden/gidden.github.io>`_, and I only keep
+html in my website repository. My local copy of each is in ``~/personal/site``
+and ``~/personal/blog``, respectively. Accordingly, I had to update the blog
+repos Makefile with the following lines: ::
 
   # override default output dir
   OUTPUTDIR=$(BASEDIR)/build
